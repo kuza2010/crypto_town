@@ -1,7 +1,10 @@
 <template>
   <div id="app">
     <toolbar/>
-    <router-view/>
+    <div class="main-container">
+      <router-view/>
+    </div>
+    <Footer/>
   </div>
 </template>
 
@@ -10,8 +13,16 @@
 </style>
 <script>
 import Toolbar from '@/app/components/toolbar/Toolbar.vue';
+import Footer from '@/app/components/footer/Footer.vue';
 
 export default {
-  components: { Toolbar },
+  components: {
+    Toolbar,
+    Footer,
+  },
 };
 </script>
+
+<style>
+
+</style>
