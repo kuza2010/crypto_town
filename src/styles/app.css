@@ -23,6 +23,10 @@ body {
 }
 
 
-.bg-light-accent{
+/*
+ * Custom defined css
+*/
+
+.bg-light-accent {
     background-color: #65a491 !important;
 }

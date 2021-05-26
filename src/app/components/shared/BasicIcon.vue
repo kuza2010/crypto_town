@@ -1,5 +1,5 @@
 <template>
-  <svg :style="iconStyle" viewBox="0 0 24 24">
+  <svg class="default-icon" viewBox="0 0 24 24" :style="iconStyle">
     <path :d="icon"/>
   </svg>
 </template>
@@ -37,5 +37,7 @@ export default {
 </script>
 
 <style scoped>
-
+.default-icon {
+  fill: var(--bs-gray-dark);
+}
 </style>

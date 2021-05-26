@@ -1,5 +1,5 @@
 <template>
-  <md-toolbar class="md-primary md-dense">
+  <md-toolbar class="md-primary md-dense toolbar">
     <div class="md-toolbar-row">
       <div class="md-toolbar-section-start">
         <router-link to="/" class="md-layout md-alignment-center-left">
@@ -30,6 +30,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+.toolbar {
+  min-width: 959px;
+}
 
 .md-toolbar.md-theme-default.md-primary .md-title {
   color: var(--bs-gray-dark);
