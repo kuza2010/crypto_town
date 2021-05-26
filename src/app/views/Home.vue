@@ -1,7 +1,14 @@
 <template>
   <div class="home">
-    <h1>Hello</h1>
-    <md-button>Btn</md-button>
+    <div class="md-layout md-alignment-center">
+      <h1>Hello</h1>
+    </div>
+    <div class="md-layout md-alignment-center">
+      <h1>Hello</h1>
+    </div>
+    <div class="md-layout md-alignment-center">
+      <h1>Hello</h1>
+    </div>
   </div>
 </template>
 
@@ -12,3 +19,10 @@ export default {
   components: {},
 };
 </script>
+
+<style scoped lang="scss">
+.home {
+  margin-top: 5rem;
+  margin-bottom: 1rem;
+}
+</style>

@@ -12,7 +12,7 @@
 import FooterExternalLink from '@/app/components/footer/FooterExternalLink.vue';
 
 export default {
-  name: 'Footer',
+  name: 'BottomBar',
   components: { FooterExternalLink },
   data() {
     return {
@@ -28,9 +28,6 @@ export default {
 @import "/src/styles/theme";
 
 footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
   background-color: md-theme(primary);
   padding: 0.5rem 1.5rem;
 }

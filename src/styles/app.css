@@ -1,12 +1,24 @@
-* {
-    box-sizing: border-box;
-}
-*:before,
-*:after {
-    box-sizing: border-box;
-}
-html,
-body {
+html, body {
     height: 100%;
-    position: relative;
 }
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+#app {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    flex: 1 0 auto;
+    background-color: var(--bs-light);
+}
+
+.footer {
+    flex-shrink: 0;
+}
+

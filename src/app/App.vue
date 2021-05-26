@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <toolbar/>
-    <div class="main-container">
+    <div class="content">
       <router-view/>
     </div>
-    <Footer/>
+    <bottom-bar class="footer"/>
   </div>
 </template>
 
@@ -13,16 +13,12 @@
 </style>
 <script>
 import Toolbar from '@/app/components/toolbar/Toolbar.vue';
-import Footer from '@/app/components/footer/Footer.vue';
+import BottomBar from '@/app/components/footer/BottomBar.vue';
 
 export default {
   components: {
     Toolbar,
-    Footer,
+    BottomBar,
   },
 };
 </script>
-
-<style>
-
-</style>
