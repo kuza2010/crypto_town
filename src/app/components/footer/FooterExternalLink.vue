@@ -1,38 +1,43 @@
 <template>
-  <md-button @click.native="onClick"
-             class="md-icon-button md-dense">
-    <md-icon v-if="isSrc" :md-src="icon"/>
-    <md-icon v-else>{{icon}}</md-icon>
+  <md-button :href="href" class="md-icon-button md-dense bg-light-accent">
+    <svg :style="iconStyle" viewBox="0 0 24 24">
+      <path :d="icon"/>
+    </svg>
   </md-button>
 </template>
 
 <script>
+import customIcons from '../../assets/custom-icons.json';
+
 export default {
   name: 'FooterExternalLink',
   props: {
-    icon: {
-      type: String,
-      required: true,
-    },
     href: {
       type: String,
       required: true,
     },
-  },
-  methods: {
-    onClick() {
-      window.open(this.href);
+    iconName: {
+      type: String,
+      required: false,
+    },
+    size: {
+      type: String,
+      required: false,
+      default: '24px',
     },
   },
+  data() {
+    return {
+      iconStyle: {
+        height: this.size,
+        width: this.size,
+      },
+    };
+  },
   computed: {
-    isSrc() {
-      console.log(this.icon);
-      return this.icon.includes('/');
+    icon() {
+      return customIcons[this.iconName];
     },
   },
 };
 </script>
-
-<style scoped>
-
-</style>

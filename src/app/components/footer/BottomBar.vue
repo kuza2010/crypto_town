@@ -2,8 +2,13 @@
   <footer class="md-layout md-elevation-24 md-alignment-center">
     <span class="md-body-2 text-gray">&#64; Artyom Danilin, 2021</span>
     <div class="md-layout md-alignment-center-right">
-      <footer-external-link :href="linkedin" icon="link"/>
-      <footer-external-link :href="github" icon="account_circle"/>
+      <footer-external-link :href="github"
+                            icon-name="github"
+                            size="20px"/>
+
+      <footer-external-link :href="linkedin"
+                            icon-name="linkedIn"
+                            size="20px"/>
     </div>
   </footer>
 </template>
@@ -29,6 +34,6 @@ export default {
 
 footer {
   background-color: md-theme(primary);
-  padding: 0.5rem 1.5rem;
+  padding: 0.75rem 1.5rem;
 }
 </style>
