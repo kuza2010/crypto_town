@@ -1,16 +1,15 @@
 <template>
   <md-button :href="href" class="md-icon-button md-dense bg-light-accent">
-    <svg :style="iconStyle" viewBox="0 0 24 24">
-      <path :d="icon"/>
-    </svg>
+    <basic-icon :icon-name="iconName" :size="size"/>
   </md-button>
 </template>
 
 <script>
-import customIcons from '../../assets/custom-icons.json';
+import BasicIcon from '@/app/components/shared/BasicIcon.vue';
 
 export default {
   name: 'FooterExternalLink',
+  components: { BasicIcon },
   props: {
     href: {
       type: String,
@@ -21,22 +20,8 @@ export default {
       required: false,
     },
     size: {
-      type: String,
+      type: Number,
       required: false,
-      default: '24px',
-    },
-  },
-  data() {
-    return {
-      iconStyle: {
-        height: this.size,
-        width: this.size,
-      },
-    };
-  },
-  computed: {
-    icon() {
-      return customIcons[this.iconName];
     },
   },
 };

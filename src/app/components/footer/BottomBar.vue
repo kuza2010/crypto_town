@@ -4,11 +4,11 @@
     <div class="md-layout md-alignment-center-right">
       <footer-external-link :href="github"
                             icon-name="github"
-                            size="20px"/>
+                            :size="20"/>
 
       <footer-external-link :href="linkedin"
                             icon-name="linkedIn"
-                            size="20px"/>
+                            :size="18"/>
     </div>
   </footer>
 </template>
