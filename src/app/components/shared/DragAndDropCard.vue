@@ -23,7 +23,7 @@
                  @md-closed="clearErrorMessage">
       <span>{{ snakeBarErrorMessage }}</span>
     </md-snackbar>
-    <md-dialog-alert :md-active.sync="hasError" md-title="Oops. Can not proceed your request"
+    <md-dialog-alert :md-active.sync="hasError" md-title="😿 Oops. Can not proceed your request"
                      :md-content="generalErrorMessage"
     />
   </div>
