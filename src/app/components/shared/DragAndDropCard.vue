@@ -7,7 +7,7 @@
     />
 
     <div class="md-layout card-body md-alignment-center">
-      <input type="file" accept="image/*" ref="fileInput" @change="onFileSelected">
+      <input type="file" accept="image/*" ref="fileInput" @change="onFileDropped">
       <div class="md-layout-item md-medium-size-55 md-size-45 m-2 pointer"
            @click="chooseFileClicked"
       >
@@ -21,20 +21,27 @@
 
     <md-snackbar :md-active.sync="showSnackbar" md-position="center"
                  @md-closed="clearErrorMessage">
-      <span>{{ errorMessage }}</span>
+      <span>{{ snakeBarErrorMessage }}</span>
     </md-snackbar>
+    <md-dialog-alert :md-active.sync="hasError" md-title="Oops. Can not proceed your request"
+                     :md-content="generalErrorMessage"
+    />
   </div>
 </template>
 
 <script>
+
 export default {
   name: 'DragAndDropCard',
   data() {
     return {
       busy: false,
-      errorMessage: '',
+      hasError: false,
+      snakeBarErrorMessage: '',
       selectedFile: null,
       showSnackbar: false,
+      uploadFieldName: 'image',
+      generalErrorMessage: 'Sorry, but something went wrong.<strong>We have already equip a group of dwarfs to fix that!</strong>',
     };
   },
   methods: {
@@ -44,38 +51,53 @@ export default {
         return;
       }
 
-      const droppedFile = $event.dataTransfer.files[0];
+      const droppedFile = $event instanceof DragEvent
+        ? $event.dataTransfer.files[0]
+        : $event.target.files[0];
+
       if (droppedFile.type.startsWith('image/')) {
-        console.log(droppedFile);
+        this.sendFile(droppedFile);
       } else {
-        this.errorMessage = 'Only image available for selection. Please, select an image.';
+        this.snakeBarErrorMessage = 'Only image available for selection. Please, select an image.';
         this.showSnackbar = true;
       }
+      this.resetInput();
     },
     chooseFileClicked($event) {
+      $event.preventDefault();
       if (this.busy) {
         return;
       }
 
-      console.log($event);
       this.$refs.fileInput.click();
     },
-    onFileSelected($event) {
-      if (this.busy) {
+    clearErrorMessage() {
+      this.snakeBarErrorMessage = '';
+    },
+    sendFile(file) {
+      if (file.size <= 0) {
+        this.snakeBarErrorMessage = 'You can not upload empty image. Please, select correct image.';
+        this.showSnackbar = true;
         return;
       }
+      this.busy = true;
+      const formData = new FormData();
+      formData.append(this.uploadFieldName, file, file.name);
 
-      console.log($event);
-      // eslint-disable-next-line prefer-destructuring
-      this.selectedFile = $event.target.files[0];
-      console.log(`selected file: ${this.selectedFile}`);
+      new Promise((resolve, reject) => setTimeout(reject, 5000))
+        .then(() => console.log('UPLOADED'))
+        // eslint-disable-next-line no-return-assign
+        .catch(() => this.hasError = true)
+        // eslint-disable-next-line no-return-assign
+        .finally(() => this.busy = false);
     },
-    clearErrorMessage() {
-      this.errorMessage = '';
+    resetInput() {
+      this.$refs.fileInput.value = '';
     },
     reset() {
       this.busy = false;
-      this.errorMessage = '';
+      this.hasError = false;
+      this.snakeBarErrorMessage = '';
       this.selectedFile = null;
       this.showSnackbar = false;
     },

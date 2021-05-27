@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import {
-  MdButton, MdIcon, MdProgress, MdSnackbar, MdToolbar,
+  MdButton, MdDialog, MdDialogAlert, MdIcon, MdProgress, MdSnackbar, MdToolbar,
 } from 'vue-material/dist/components';
 import App from './app/App.vue';
 import router from './app/router';
@@ -12,9 +12,11 @@ import 'vue-material/dist/vue-material.min.css';
 
 Vue.use(MdIcon);
 Vue.use(MdButton);
+Vue.use(MdDialog);
 Vue.use(MdToolbar);
 Vue.use(MdSnackbar);
 Vue.use(MdProgress);
+Vue.use(MdDialogAlert);
 
 new Vue({
   router,
