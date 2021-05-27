@@ -2,16 +2,18 @@
   <div class="card p-1 text-center" @drop="onFileDropped"
        @dragover.prevent @dragenter.prevent
   >
+    <md-progress-bar md-mode="query" class="pb"
+                     :style="{visibility: busy ? 'visible': 'collapse'}"
+    />
+
     <div class="md-layout card-body md-alignment-center">
       <input type="file" accept="image/*" ref="fileInput" @change="onFileSelected">
       <div class="md-layout-item md-medium-size-55 md-size-45 m-2 pointer"
            @click="chooseFileClicked"
       >
-        <div class="card text-white bg-warning p-3">
+        <div class="card text-white bg-success p-3">
           <h4 class="card-title">Select image</h4>
-          <p class="card-text">
-            from your computer
-          </p>
+          <p class="card-text">from your computer</p>
         </div>
       </div>
     </div>
@@ -29,16 +31,20 @@ export default {
   name: 'DragAndDropCard',
   data() {
     return {
+      busy: false,
+      errorMessage: '',
       selectedFile: null,
       showSnackbar: false,
-      errorMessage: '',
     };
   },
   methods: {
     onFileDropped($event) {
       $event.preventDefault();
-      const droppedFile = $event.dataTransfer.files[0];
+      if (this.busy) {
+        return;
+      }
 
+      const droppedFile = $event.dataTransfer.files[0];
       if (droppedFile.type.startsWith('image/')) {
         console.log(droppedFile);
       } else {
@@ -47,10 +53,18 @@ export default {
       }
     },
     chooseFileClicked($event) {
+      if (this.busy) {
+        return;
+      }
+
       console.log($event);
       this.$refs.fileInput.click();
     },
     onFileSelected($event) {
+      if (this.busy) {
+        return;
+      }
+
       console.log($event);
       // eslint-disable-next-line prefer-destructuring
       this.selectedFile = $event.target.files[0];
@@ -58,6 +72,12 @@ export default {
     },
     clearErrorMessage() {
       this.errorMessage = '';
+    },
+    reset() {
+      this.busy = false;
+      this.errorMessage = '';
+      this.selectedFile = null;
+      this.showSnackbar = false;
     },
   },
 };
@@ -81,7 +101,7 @@ export default {
     cursor: pointer;
 
     &:hover > * {
-      background-color: var(--bs-yellow-light) !important;
+      background-color: var(--bs-teal) !important;
     }
   }
 }
