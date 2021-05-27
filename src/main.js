@@ -1,5 +1,7 @@
 import Vue from 'vue';
-import { MdButton, MdIcon, MdToolbar } from 'vue-material/dist/components';
+import {
+  MdButton, MdIcon, MdSnackbar, MdToolbar,
+} from 'vue-material/dist/components';
 import App from './app/App.vue';
 import router from './app/router';
 
@@ -11,6 +13,7 @@ import 'vue-material/dist/vue-material.min.css';
 Vue.use(MdIcon);
 Vue.use(MdButton);
 Vue.use(MdToolbar);
+Vue.use(MdSnackbar);
 
 new Vue({
   router,
