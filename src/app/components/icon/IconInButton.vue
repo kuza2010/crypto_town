@@ -1,5 +1,5 @@
 <template>
-  <md-button class="md-icon-button">
+  <md-button class="md-icon-button" @click="onClick">
     <md-icon :style="{color: color}">
       <slot/>
     </md-icon>
@@ -20,6 +20,11 @@ export default {
       type: Boolean,
       required: false,
       default: true,
+    },
+  },
+  methods: {
+    onClick() {
+      this.$emit('onClick');
     },
   },
 };

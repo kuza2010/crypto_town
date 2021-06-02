@@ -1,13 +1,13 @@
 <template>
-  <div class="card p-1 text-center" @drop="onFileDropped"
-       @dragover.prevent @dragenter.prevent
+  <div v-if="type" class="card p-1 text-center"
+       @drop="onFileDropped" @dragover.prevent @dragenter.prevent
   >
     <md-progress-bar md-mode="query" class="pb"
                      :style="{visibility: busy ? 'visible': 'collapse'}"
     />
 
     <div class="md-layout card-body md-alignment-center">
-      <input type="file" accept="image/*" ref="fileInput" @change="onFileDropped">
+      <input type="file" accept="image/x-portable-graymap" ref="fileInput" @change="onFileDropped">
       <div class="md-layout-item md-medium-size-55 md-size-45 m-2 pointer"
            @click="chooseFileClicked"
       >
@@ -27,12 +27,41 @@
                      :md-content="generalErrorMessage"
     />
   </div>
+
+  <div v-else class="card p-1 text-center"
+       @drop="onFileDropped" @dragover.prevent @dragenter.prevent
+  >
+    <h3 class="pt-2">Result:</h3>
+    <div class="md-layout card-body">
+      <md-list>
+        <md-list-item>
+          <md-icon>attach_file</md-icon>
+          <span class="fw-bold">File name:</span>
+          <span class="md-list-item-text px-1">{{ result['fileName'] }}</span>
+        </md-list-item>
+        <md-list-item>
+          <md-tooltip md-direction="left">
+            Stego probability: {{ stegoProbe }} Cover probability: {{ coverProbe }}
+          </md-tooltip>
+          <md-icon>help_outline</md-icon>
+          <span class="fw-bold">Result:</span>
+          <span class="md-list-item-text px-1">{{ result['fileStatus'] }}</span>
+        </md-list-item>
+      </md-list>
+    </div>
+    <icon-in-button class="back" @onClick="reset">chevron_left</icon-in-button>
+  </div>
+
 </template>
 
 <script>
 
+import checkFile from '@/app/service/fileCheckService';
+import IconInButton from '@/app/components/icon/IconInButton.vue';
+
 export default {
   name: 'DragAndDropCard',
+  components: { IconInButton },
   data() {
     return {
       busy: false,
@@ -42,7 +71,23 @@ export default {
       showSnackbar: false,
       uploadFieldName: 'image',
       generalErrorMessage: 'Sorry, but something went wrong.<strong>We have already equip a group of dwarfs to fix that!</strong>',
+      type: 1,
+      result: {},
     };
+  },
+  computed: {
+    stegoProbe() {
+      if (this.result.extras) {
+        return this.result.extras.stego;
+      }
+      return '...';
+    },
+    coverProbe() {
+      if (this.result.extras) {
+        return this.result.extras.cover;
+      }
+      return '...';
+    },
   },
   methods: {
     onFileDropped($event) {
@@ -55,10 +100,10 @@ export default {
         ? $event.dataTransfer.files[0]
         : $event.target.files[0];
 
-      if (droppedFile.type.startsWith('image/')) {
+      if (droppedFile.name.endsWith('.pgm')) {
         this.sendFile(droppedFile);
       } else {
-        this.snakeBarErrorMessage = 'Only image available for selection. Please, select an image.';
+        this.snakeBarErrorMessage = 'Only PGM grayscale file format available for selection. Please, select an .pgm image.';
         this.showSnackbar = true;
       }
       this.resetInput();
@@ -81,15 +126,19 @@ export default {
         return;
       }
       this.busy = true;
-      const formData = new FormData();
-      formData.append(this.uploadFieldName, file, file.name);
-
-      new Promise((resolve, reject) => setTimeout(reject, 5000))
-        .then(() => console.log('UPLOADED'))
-        // eslint-disable-next-line no-return-assign
-        .catch(() => this.hasError = true)
-        // eslint-disable-next-line no-return-assign
-        .finally(() => this.busy = false);
+      checkFile(this.uploadFieldName, file, file.name)
+        .then((x) => {
+          console.log(x);
+          this.busy = false;
+          this.result = x;
+          // eslint-disable-next-line no-return-assign
+          setTimeout(() => this.type = 0, 0);
+        })
+        .catch((err) => {
+          console.log(err);
+          this.busy = false;
+          this.hasError = true;
+        });
     },
     resetInput() {
       this.$refs.fileInput.value = '';
@@ -100,6 +149,8 @@ export default {
       this.snakeBarErrorMessage = '';
       this.selectedFile = null;
       this.showSnackbar = false;
+      this.type = 1;
+      this.result = {};
     },
   },
 };
