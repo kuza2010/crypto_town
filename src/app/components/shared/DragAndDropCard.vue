@@ -128,14 +128,13 @@ export default {
       this.busy = true;
       checkFile(this.uploadFieldName, file, file.name)
         .then((x) => {
-          console.log(x);
           this.busy = false;
           this.result = x;
           // eslint-disable-next-line no-return-assign
           setTimeout(() => this.type = 0, 0);
         })
         .catch((err) => {
-          console.log(err);
+          console.error(err);
           this.busy = false;
           this.hasError = true;
         });
