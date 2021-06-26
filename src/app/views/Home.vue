@@ -8,8 +8,8 @@
     <div class="md-layout md-alignment-center info">
       <div class="md-layout-item md-medium-size-45 md-size-40">
         <span class="md-body-1">
-        Crypto town is a project with the one necessary point - security.
-        Download file and Crypto town check if there is any embedded information inside your image.
+        Crypto town is a project with one necessary goal - security.
+        Download file and Crypto town checks if there is any embedded information inside your image.
       </span>
       </div>
     </div>

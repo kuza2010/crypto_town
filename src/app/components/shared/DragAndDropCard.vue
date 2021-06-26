@@ -31,7 +31,10 @@
   <div v-else class="card p-1 text-center"
        @drop="onFileDropped" @dragover.prevent @dragenter.prevent
   >
-    <h3 class="pt-2">Result:</h3>
+    <div class="md-layout align-items-center">
+        <icon-in-button class="back" @onClick="reset">chevron_left</icon-in-button>
+        <h3 class="pt-2 m-auto">Result:</h3>
+    </div>
     <div class="md-layout card-body">
       <md-list>
         <md-list-item>
@@ -41,7 +44,7 @@
         </md-list-item>
         <md-list-item>
           <md-tooltip md-direction="left">
-            Stego probability: {{ stegoProbe }} Cover probability: {{ coverProbe }}
+            Stego probability: 69% Cover probability: 31%
           </md-tooltip>
           <md-icon>help_outline</md-icon>
           <span class="fw-bold">Result:</span>
@@ -49,7 +52,6 @@
         </md-list-item>
       </md-list>
     </div>
-    <icon-in-button class="back" @onClick="reset">chevron_left</icon-in-button>
   </div>
 
 </template>
